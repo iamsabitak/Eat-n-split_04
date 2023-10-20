@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const initialFriends = [
   {
@@ -21,10 +21,50 @@ const initialFriends = [
   },
 ];
 
-function App() {
+export default function App() {
   return (
-    <div>App</div>
-  )
+    <div className="app">
+      <div className="sidebar">
+        <FriendList />
+      </div>
+    </div>
+  );
 }
 
-export default App
+function FriendList() {
+  const friends = initialFriends;
+  return (
+    <div>
+      <ul>
+        {friends.map((friend) => (
+          <Friend friend={friend} key={friend.id} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Friend({ friend }) {
+  return (
+    <li>
+      <img src={friend.image} alt={friend.name} />
+      <h3>{friend.name}</h3>
+      {friend.balance < 0 && (
+        <p className="red">
+          you owe {friend.name} {Math.abs(friend.balance)}$
+        </p>
+      )}
+      {friend.balance > 0 && (
+        <p className="green">
+          {friend.name} owe you {Math.abs(friend.balance)}$
+        </p>
+      )}
+      {friend.balance === 0 && (
+        <p>
+          you and {friend.name} are even
+        </p>
+      )}
+      <button className="button">Select</button>
+    </li>
+  );
+}
